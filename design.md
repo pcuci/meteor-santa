@@ -10,8 +10,7 @@ General design constraints:
 ### Other non-functional requirements:
 
 - Allow for scalability and modularity, don't overdo
-- Future versions should rely less and less an honor system, and eventually handle cheaters/tricksters gracefully or eliminate the incentive or possiblity to missbehave alltogether
-- 
+- Future versions should rely less on the honor assumption: handle cheaters/tricksters gracefully or eliminate the incentive or possiblity to missbehave in the first place
 
 ## CLI app UX
 Imagine one command line interface on a computer, and the computer is passed around for everyone to type in their names and identify who they don't want to receive a present from (the better half).
@@ -27,7 +26,7 @@ The host has a different view of the hat, more holistic, and checks to see if th
 
 A good solution would **balance the privacy of participants with the need for public disclosure of who's who**. What if someone is in a serious secret relationship with a 2nd degree cousin's ex-husband who is now divorced and therefore legally still part of the family and allowed to participate because they had a child while married?
 
-We therefore challenge the core assumption that the host must know everyone's relationships. Ideally, the system should not know the full picture also; something to consider in a future version.
+We therefore challenge the core assumption that the host must know everyone's relationships statuses. Ideally, the system should not know the full picture also; something to consider in a future version.
 
 ## Mix god interface with user personalized
 It is possible that not everyone in the family has a mobile phone, knows how to use one, can use one, or wants to use techh. Some folks will never adopt technology, but they're still family and want presents; they also give great expensive non-techy gifts, and as such they deserve to play! The best solution would allow trusted others to play on behalf of non-techies.
