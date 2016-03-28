@@ -2,4 +2,4 @@
 
 Review the [design](design.md) discussion
 
-<iframe src="https://marvelapp.com/f0ih0g?emb=1" width="390" height="755" allowTransparency="true" frameborder="0"></iframe>
+[![MarvelApp prototype for meteor-santa](https://i.imgur.com/08Uf3nD.png)](https://marvelapp.com/explore/598647/meteor-santa)
