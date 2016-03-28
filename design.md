@@ -15,8 +15,8 @@ General design constraints:
 ## CLI app UX
 Imagine one command line interface on a computer, and the computer is passed around for everyone to type in their names and identify who they don't want to receive a present from (the better half).
 
-## Web/mobile app UX
-Same as the CLI, with familiar UI components
+## Web/mobile app UX, a "God" interface
+Same as the CLI, with familiar UI components. All users use same terminal to interact with the system, or the host does all the work for everyone and communicates the matches.
 
 ## Real-time personalized private experience for each participant
 
@@ -28,7 +28,7 @@ A good solution would **balance the privacy of participants with the need for pu
 
 We therefore challenge the core assumption that the host must know everyone's relationships statuses. Ideally, the system should not know the full picture also; something to consider in a future version.
 
-## Mix god interface with user personalized
+## Mix "God" interface with user personalized
 It is possible that not everyone in the family has a mobile phone, knows how to use one, can use one, or wants to use techh. Some folks will never adopt technology, but they're still family and want presents; they also give great expensive non-techy gifts, and as such they deserve to play! The best solution would allow trusted others to play on behalf of non-techies.
 
 When participants don't all own phones, the system should gracefully fall to a one "god" UI that can be passed around - like a hat - for everyone to type in their names and retrieve their match. 
