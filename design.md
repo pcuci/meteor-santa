@@ -10,6 +10,7 @@ General design constraints:
 ### Other non-functional requirements:
 
 - Allow for scalability and modularity, don't overdo
+- Future versions should rely less and less an honor system, and eventually handle cheaters/tricksters gracefully or eliminate the incentive or possiblity to missbehave alltogether
 - 
 
 ## CLI app UX
