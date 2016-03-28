@@ -5,6 +5,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 well">
+      {{> Santas}}
       {{> Login}}
       {{> Hat}}
       <h3>Instructions</h3>
@@ -25,6 +26,14 @@
   </div>
 </div>
 </body>
+
+<template name="Santas">
+  <h3>Santa assignment</h3>
+  <form class="form-inline">
+    <button type="submit" class="btn btn-primary">Match Santas</button>
+  </form>
+  <p>You are <strong>{{giftee.username}}</strong>'s secret santa!</p>
+</template>
 
 <template name="Hat">
   <h3>Who's in the hat?</h3>
