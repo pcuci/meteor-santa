@@ -2,10 +2,10 @@
 
 General design constraints:
 
-1. The time required of everyone to use ```meteor santa``` should be dramatically lower than the in-person version of the game to pass the hat around
-1. The digital experience should match the real-life "pass the hat around" in-person experience as much as possible which would make the system intuitive to use
-1. Should be easy to understand and use by both organizers and participants, and handle exception cases gracefully or completely avoid or pre-emptively point out inconsistent/impossible matching as early as possible
-1. 
+1. Using meteor santa should take dramatically less time than passing the hat around
+1. Matching the in-person experience would be more intuitive
+1. Handle exception cases gracefully or completely avoid or pre-emptively point out inconsistent/impossible matching as early as possible
+1. Cater to various user types: host, participants, coupled, non-tech, old and young, cooperative, tech-savvy or not
 
 ### Other non-functional requirements:
 
