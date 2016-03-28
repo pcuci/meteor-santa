@@ -1,5 +1,6 @@
 if (Meteor.isClient) {
-  userConnections = new Mongo.Collection("user_status_sessions");
+  UserConnections = new Mongo.Collection("user_status_sessions");
+
   relativeTime = function(timeAgo) {
     var ago, days, diff, time;
     diff = moment.utc(TimeSync.serverTime() - timeAgo);
@@ -13,7 +14,7 @@ if (Meteor.isClient) {
     return date != null ? date.toLocaleString() : void 0;
   });
   Handlebars.registerHelper("relativeTime", relativeTime);
-  Template.login.helpers({
+  Template.Login.helpers({
     loggedIn: function() {
       return Meteor.userId();
     }
@@ -58,6 +59,11 @@ if (Meteor.isClient) {
       return this.isMonitoring() || "false";
     }
   });
+  Template.Hat.helpers({
+    users: function() {
+      return Meteor.users.find();
+    }
+  });
   Template.serverStatus.helpers({
     anonymous: function() {
       return UserConnections.find({
@@ -98,7 +104,7 @@ if (Meteor.isClient) {
       return new Date(this.loginTime).toLocaleString();
     }
   });
-  Template.login.events = {
+  Template.Login.events = {
     "submit form": function(e, tmpl) {
       var input;
       e.preventDefault();
