@@ -7,6 +7,7 @@
     <div class="col-md-4 well">
       {{> Santas}}
       {{> Login}}
+      {{> Profile}}
       {{> Hat}}
       <h3>Instructions</h3>
       <ul>
@@ -34,6 +35,28 @@
   </form>
   <p>You are <strong>{{giftee.username}}</strong>'s secret santa!</p>
 </template>
+
+<template name="Profile">
+  <h3>Single or not?</h3>
+  <form class="form-inline">
+    <input type="radio" name="single" value="true" {{single}}>Single
+    <input type="radio" name="single" value="false" {{conjoint}}>Conjoint
+  </form>
+</template>
+
+<template name="Conjoint">
+  <p>Who's your sweetheart?</p>
+  <form class="form-inline">
+    <select id="category-select">
+    <option disabled="disabled" selected="selected">Please Select</option>
+    {{#each usernames}}
+      <option value="{{this}}">{{this}}</option>
+    {{/each}}
+    </select>
+    <button type="submit" class="btn btn-primary">Match Santas</button>
+  </form>
+</template>
+
 
 <template name="Hat">
   <h3>Who's in the hat?</h3>

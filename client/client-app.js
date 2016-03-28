@@ -18,6 +18,36 @@ Template.Login.helpers({
   }
 });
 
+Template.Profile.helpers({
+  single: function() {
+    return 'checked';
+  },
+  conjoint: function() {
+    return '';
+  }
+});
+
+Template.Profile.events({
+  'change': function (event, template) {
+    console.log("changed radio");
+    single = template.find('input:radio[name=single]:checked').value;
+    Meteor.call("setSingle", (single == "true"));
+  }
+})
+
+Template.Conjoint.helpers({
+  categories: function(){
+    return ["facebook", "news", "tv", "tweets"]
+  }
+});
+
+Template.Conjoint.events({
+  "change #category-select": function (event, template) {
+    var category = $(event.currentTarget).val();
+    console.log("category : " + category);
+  }
+});
+
 Template.status.events = {
   "submit form.start-monitor": function(e, tmpl) {
     e.preventDefault();

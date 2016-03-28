@@ -33,7 +33,8 @@ Meteor.publish(null, function() {
       fields: {
         status: 1,
         gifteeId: 1,
-        username: 1
+        username: 1,
+        single: 1
       }
     }), UserStatus.connections.find()
   ];
@@ -47,7 +48,15 @@ printUsernames = function (arr) {
 }
 
 Meteor.methods({
-  matchSantas: function (taskId, setChecked) {
+  setSingle: function (single) {
+    console.log('single', single);
+    Meteor.users.update(this.userId, {
+      $set: {
+        single: single
+      }
+    });
+  },
+  matchSantas: function () {
     var players = Meteor.users.find().fetch();
     var giftees = randomSortGiftees(players);
     printUsernames(players);
