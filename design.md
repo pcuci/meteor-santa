@@ -2,15 +2,16 @@
 
 General design constraints:
 
-1. Using meteor santa should take dramatically less time than passing the hat around
+1. Make the sort sift match be instantaneous (instead of by hand and by personal judgment)
 1. Matching the in-person experience would be more intuitive
 1. Handle exception cases gracefully or completely avoid or pre-emptively point out inconsistent/impossible matching as early as possible
 1. Cater to various user types: host, participants, coupled, non-tech, old and young, cooperative, tech-savvy or not
 
 ### Other non-functional requirements:
 
-- Allow for scalability and modularity, don't overdo
-- Future versions should rely less on the honor assumption: handle cheaters/tricksters gracefully or eliminate the incentive or possiblity to missbehave in the first place
+1. Track the (normal) complications that arise in the "deadline" preparation period of about 48 hours before the exchange event, e.g.: last minute cancelations, new participants, emergency presents/reassignments
+1. Allow for scalability and modularity, don't overdo
+1. Future versions should rely less on the honor assumption: handle cheaters/tricksters gracefully or eliminate the incentive or possiblity to missbehave in the first place
 
 ## CLI app UX
 Imagine one command line interface on a computer, and the computer is passed around for everyone to type in their names and identify who they don't want to receive a present from (the better half).
