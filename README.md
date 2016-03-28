@@ -10,7 +10,8 @@ For Linux:
 ```curl https://install.meteor.com/ | sh```
 
 Then:
+
 1. Download or clone repo `git clone git@github.com:pcuci/meteor-santa.git`
-2. Enter the folder: `cd meteor-santa/`
-3. Start meteor: `meteor`
-4. View the app at http://localhost:3000/
+2. Enter app folder: `cd meteor-santa/`
+3. Start the app: `meteor`
+4. View at [localhost:3000](http://localhost:3000/)
