@@ -18,7 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 standard-minifier-css
 standard-minifier-js
 
-coffeescript
 mizzao:accounts-testing
 mizzao:user-status
 mizzao:timesync

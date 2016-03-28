@@ -2,3 +2,15 @@
 
 Review the [design](design.md) discussion and the early hotspot clickable prototype to get a sense of what we're building.
 [![MarvelApp prototype for meteor-santa](https://i.imgur.com/08Uf3nD.png)](https://marvelapp.com/explore/598647/meteor-santa)
+
+# Install and test
+Meteor installation instructions: https://www.meteor.com/install
+
+For Linux:
+```curl https://install.meteor.com/ | sh```
+
+Then:
+1. Download or clone repo `git clone git@github.com:pcuci/meteor-santa.git`
+2. Enter the folder: `cd meteor-santa/`
+3. Start meteor: `meteor`
+4. View the app at http://localhost:3000/
