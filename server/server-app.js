@@ -12,6 +12,12 @@ function shuffleArray(array) {
   return array;
 };
 
+var swapArrayElements = function(arr, indexA, indexB) {
+  var temp = arr[indexA];
+  arr[indexA] = arr[indexB];
+  arr[indexB] = temp;
+};
+
 function randomSortGiftees(players) {
   var clonedPlayers = JSON.parse(JSON.stringify(players));
   shuffeledGiftees = shuffleArray(clonedPlayers);
@@ -33,19 +39,42 @@ Meteor.publish(null, function() {
   ];
 });
 
+printUsernames = function (arr) {
+  for (i = 0; i < arr.length; i++) {
+    console.log(arr[i].username, ', ');
+  }
+  console.log()
+}
+
 Meteor.methods({
   matchSantas: function (taskId, setChecked) {
     var players = Meteor.users.find().fetch();
     var giftees = randomSortGiftees(players);
-    _.each(players, function(player) {
+    printUsernames(players);
+    printUsernames(giftees);
+    for (i = 0; i < players.length; i++) {
+      if (players[i]._id === giftees[i]._id) {
+        // swap it with the last
+        console.log("> ERROR: self-santa!", players[i].username, i);
+        if (i < giftees.length - 1) {
+          swapArrayElements(giftees, i, giftees.length - 1);
+        } else {
+          swapArrayElements(giftees, 1, giftees.length - 1);
+        }
+      }
+    }
+
+    printUsernames(giftees);
+
+    for (i = 0; i < players.length; i++) {
       // can't pick yourself, ensure gifteeId is not player's _id
       giftee = giftees.shift();
-      Meteor.users.update(player._id, {
+      Meteor.users.update(players[i]._id, {
         $set: {
           gifteeId: giftee._id
         }
       });
-      console.log(player.username, "gifts", (Meteor.users.findOne({_id: giftee._id})) ? Meteor.users.findOne({_id: giftee._id}).username : "");
-    });
+      console.log(players[i].username, "gifts", (Meteor.users.findOne({_id: giftee._id})) ? Meteor.users.findOne({_id: giftee._id}).username : "");
+    }
   }
 });
