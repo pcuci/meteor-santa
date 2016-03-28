@@ -24,12 +24,14 @@ Template.Profile.helpers({
   },
   conjoint: function() {
     return '';
+  },
+  isConjoint: function() {
+    return (Meteor.user()) ? !Meteor.user().single : false;
   }
 });
 
 Template.Profile.events({
   'change': function (event, template) {
-    console.log("changed radio");
     single = template.find('input:radio[name=single]:checked').value;
     Meteor.call("setSingle", (single == "true"));
   }

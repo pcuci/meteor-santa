@@ -49,7 +49,6 @@ printUsernames = function (arr) {
 
 Meteor.methods({
   setSingle: function (single) {
-    console.log('single', single);
     Meteor.users.update(this.userId, {
       $set: {
         single: single

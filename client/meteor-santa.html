@@ -42,6 +42,9 @@
     <input type="radio" name="single" value="true" {{single}}>Single
     <input type="radio" name="single" value="false" {{conjoint}}>Conjoint
   </form>
+  {{#if isConjoint}}
+    {{> Conjoint}}
+  {{/if}}
 </template>
 
 <template name="Conjoint">
@@ -53,7 +56,6 @@
       <option value="{{this}}">{{this}}</option>
     {{/each}}
     </select>
-    <button type="submit" class="btn btn-primary">Match Santas</button>
   </form>
 </template>
 
