@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
@@ -15,7 +13,7 @@ function shuffleArray(array) {
 };
 
 function randomSortGiftees(players) {
-  var clonedPlayers = jQuery.extend(true, {}, originalObject);
+  var clonedPlayers = JSON.parse(JSON.stringify(players));
   shuffeledGiftees = shuffleArray(clonedPlayers);
   return shuffeledGiftees;
 }
