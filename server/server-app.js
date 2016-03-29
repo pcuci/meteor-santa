@@ -1,26 +1,57 @@
-/**
- * Randomize array element order in-place.
- * Using Durstenfeld shuffle algorithm.
- */
-function shuffleArray(array) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-};
-
 var swapArrayElements = function(arr, indexA, indexB) {
   var temp = arr[indexA];
   arr[indexA] = arr[indexB];
   arr[indexB] = temp;
 };
 
+function printMatrix(players) {
+  var matrix = [];
+  // Create all possible edges
+  var colHeader = "";
+  for (var col = 0; col < players.length; col++) {
+    colHeader += players[col].username + " ";
+  }
+  console.log(colHeader);
+  for (var row = 0; row < players.length; row++) {
+    var rowData = [];
+    for (var col = 0; col < players.length; col++) {
+      var weight = 0;
+      if ((players[row].username === players[col].username) || players[row].sweetheart === players[col].username) {
+        weight = 1;
+      }
+      rowData.push({x: players[row].username, y: players[col].username, weight: weight});
+    }
+    console.log(players[row].username, "\t", _.pluck(rowData, 'weight'));
+    matrix.push(rowData);
+  }
+  return matrix;
+}
+
+function isSymetric(matrix) {
+  for (var row = 0; row < matrix.length; row++) {
+    for (var col = 0; col < matrix[0].length; col++) {
+      if (matrix[row][col].weight != matrix[col][row].weight) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function randomSortGiftees(players) {
   var clonedPlayers = JSON.parse(JSON.stringify(players));
-  shuffeledGiftees = shuffleArray(clonedPlayers);
+  var shuffeledGiftees = _.shuffle(clonedPlayers);
+  _.each(shuffeledGiftees, function(giftee) {
+    console.log(giftee.username, "♡ ", giftee.sweetheart);
+  });
+  var matrix = printMatrix(shuffeledGiftees);
+
+  console.log("Symetric?", isSymetric(matrix));
+
+  // In the worst case scenario we have 2 couples at the tail of both lists
+  if (players.length < 4) {
+    throw new Meteor.Error(400, "Matching failed. For paired plays, we need at least 4 people playing.");
+  }
   return shuffeledGiftees;
 }
 
@@ -92,7 +123,7 @@ Meteor.methods({
           gifteeId: giftee._id
         }
       });
-      console.log(players[i].username, "gifts", (Meteor.users.findOne({_id: giftee._id})) ? Meteor.users.findOne({_id: giftee._id}).username : "");
+      console.log(players[i].username, "🎅 ", (Meteor.users.findOne({_id: giftee._id})) ? Meteor.users.findOne({_id: giftee._id}).username : "");
     }
   }
 });
