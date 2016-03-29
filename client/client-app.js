@@ -31,22 +31,26 @@ Template.Profile.helpers({
 });
 
 Template.Profile.events({
-  'change': function (event, template) {
+  'change input[type=radio]': function (event, template) {
     single = template.find('input:radio[name=single]:checked').value;
     Meteor.call("setSingle", (single == "true"));
+    Meteor.call("setSweetheart", undefined);
   }
 })
 
 Template.Conjoint.helpers({
-  categories: function(){
-    return ["facebook", "news", "tv", "tweets"]
+  usernames: function() {
+    var users = Meteor.users.find({_id: {$ne: Meteor.userId()}}).fetch();
+    var usernames = _.pluck(users, 'username');
+    return usernames
   }
 });
 
 Template.Conjoint.events({
-  "change #category-select": function (event, template) {
-    var category = $(event.currentTarget).val();
-    console.log("category : " + category);
+  "change #username-select": function (event, template) {
+    var username = $(event.currentTarget).val();
+    console.log("username: " + username);
+    Meteor.call("setSweetheart", username);
   }
 });
 
@@ -93,7 +97,7 @@ Template.status.helpers({
   }
 });
 
-Template.Santas.helpers({
+Template.Matching.helpers({
   users: function() {
     return Meteor.users.find();
   },
@@ -106,7 +110,7 @@ Template.Santas.helpers({
   }
 });
 
-Template.Hat.helpers({
+Template.All.helpers({
   users: function() {
     return Meteor.users.find();
   }
@@ -152,11 +156,11 @@ Template.serverConnection.helpers({
   }
 });
 
-Template.Santas.events = {
+Template.Matching.events = {
   "submit form": function(e, tmpl) {
     e.preventDefault();
     Meteor.call("matchSantas");
-    console.log("Santas button pressed!");
+    console.log("Match Santas button pressed!");
   }
 };
 

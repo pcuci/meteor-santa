@@ -5,10 +5,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 well">
-      {{> Santas}}
+      {{> Matching}}
       {{> Login}}
       {{> Profile}}
-      {{> Hat}}
+      {{> All}}
       <h3>Instructions</h3>
       <ul>
         <li>Log in with any username.</li>
@@ -28,19 +28,25 @@
 </div>
 </body>
 
-<template name="Santas">
-  <h3>Santa assignment</h3>
+<template name="Matching">
+  <h3>Who's Santa?</h3>
+  <p>You are <strong>{{giftee.username}}</strong>'s secret santa!</p>
   <form class="form-inline">
     <button type="submit" class="btn btn-primary">Match Santas</button>
   </form>
-  <p>You are <strong>{{giftee.username}}</strong>'s secret santa!</p>
 </template>
 
 <template name="Profile">
-  <h3>Single or not?</h3>
-  <form class="form-inline">
-    <input type="radio" name="single" value="true" {{single}}>Single
-    <input type="radio" name="single" value="false" {{conjoint}}>Conjoint
+  <h3>How single?</h3>
+  <form>
+      <label class="radio-inline">
+        <input type="radio" name="single" value="true" {{single}}>
+        Single
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="single" value="false" {{conjoint}}>
+        Conjoint
+      </label>
   </form>
   {{#if isConjoint}}
     {{> Conjoint}}
@@ -50,18 +56,17 @@
 <template name="Conjoint">
   <p>Who's your sweetheart?</p>
   <form class="form-inline">
-    <select id="category-select">
-    <option disabled="disabled" selected="selected">Please Select</option>
-    {{#each usernames}}
-      <option value="{{this}}">{{this}}</option>
-    {{/each}}
+    <select id="username-select" class="form-control">
+      <option disabled="disabled" selected="selected">Pick your love</option>
+      {{#each usernames}}
+        <option value="{{this}}">{{this}}</option>
+      {{/each}}
     </select>
   </form>
 </template>
 
-
-<template name="Hat">
-  <h3>Who's in the hat?</h3>
+<template name="All">
+  <h3>All Santas</h3>
   <ul>
     {{#each users}}
       <li>{{username}}</li>
@@ -71,7 +76,7 @@
 
 <template name="Login">
   {{#if loggedIn}}
-  <h3>You are logged in as:</h3>
+  <h3>Logged in as:</h3>
   {{> loginButtons}}
   {{else}}
   <form class="form-inline">

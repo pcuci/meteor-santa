@@ -34,6 +34,7 @@ Meteor.publish(null, function() {
         status: 1,
         gifteeId: 1,
         username: 1,
+        sweetheart: 1,
         single: 1
       }
     }), UserStatus.connections.find()
@@ -52,6 +53,15 @@ Meteor.methods({
     Meteor.users.update(this.userId, {
       $set: {
         single: single
+      }
+    });
+  },
+  setSweetheart: function (username) {
+    if (Meteor.user() && (Meteor.user().username == username))
+      throw new Meteor.Error(400, "You can't be your own santa!");
+    Meteor.users.update(this.userId, {
+      $set: {
+        sweetheart: username
       }
     });
   },
