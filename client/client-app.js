@@ -20,9 +20,23 @@ Template.Login.helpers({
 
 Template.Profile.helpers({
   single: function() {
-    return 'checked';
+    if (Meteor.user()) {
+      if (Meteor.user().single) {
+        return 'checked';
+      } else {
+        return '';
+      }
+    }
+    return '';
   },
   conjoint: function() {
+    if (Meteor.user()) {
+      if (Meteor.user().single) {
+        return '';
+      } else {
+        return 'checked';
+      }
+    }
     return '';
   },
   isConjoint: function() {

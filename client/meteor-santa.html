@@ -5,21 +5,30 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 well">
-      {{> Matching}}
+      {{#if currentUser}}
+        {{> Matching}}
+      {{/if}}
+
       {{> Login}}
-      {{> Profile}}
+
+      {{#if currentUser}}
+        {{> Profile}}
+      {{/if}}
+
       {{> All}}
-      <h3>Instructions</h3>
-      <ul>
-        <li>Log in with any username.</li>
-        <li>Log in from other computers with the same username or open multiple tabs.</li>
-        These will appear as sessions/connections under the same user.
-        <li>Click or keypress events reset the idle timer. The default idle threshold is 30 seconds.</li>
-        <li>Idle session information is transmitted to the server and multiplexed into the user document.</li>
-        <li>Play with the idle timer to try different client-side settings.</li>
-        <li>Click 'Resync Time' a few times to see the variance in TimeSync.</li>
-      </ul>
-      {{> status userStatus}}
+      {{#if currentUser}}
+        <h3>Instructions</h3>
+        <ul>
+          <li>Log in with any username.</li>
+          <li>Log in from other computers with the same username or open multiple tabs.</li>
+          These will appear as sessions/connections under the same user.
+          <li>Click or keypress events reset the idle timer. The default idle threshold is 30 seconds.</li>
+          <li>Idle session information is transmitted to the server and multiplexed into the user document.</li>
+          <li>Play with the idle timer to try different client-side settings.</li>
+          <li>Click 'Resync Time' a few times to see the variance in TimeSync.</li>
+        </ul>
+        {{> status userStatus}}
+      {{/if}}
     </div>
     <div class="col-md-8">
       {{> serverStatus }}
