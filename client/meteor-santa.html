@@ -39,11 +39,25 @@
   {{/if}}
 
   {{#if isMatchReady}}
-    <button type="submit" class="btn btn-primary">Match Santas</button>
+    <button type="submit" class="btn btn-primary">
+      {{#if matchesExist}}
+        Rematch Santas
+      {{else}}
+        Match Santas
+      {{/if}}
+    </button>
   {{else}}
-    <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Lover declarations must match, reciprocally">Match Santas</button>
+    <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Love interests must match for all non-singles, reciprocally">
+      {{#if matchesExist}}
+        Rematch Santas
+      {{else}}
+        Match Santas
+      {{/if}}
+    </button>
   {{/if}}
-  <button type="reset" class="btn btn-warning">Clear Matches</button>
+  {{#if matchesExist}}
+    <button type="reset" class="btn btn-warning">Clear Matches</button>
+  {{/if}}
 </template>
 
 <template name="Profile">
