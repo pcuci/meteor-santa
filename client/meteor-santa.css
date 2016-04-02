@@ -1,1 +1,12 @@
 /* CSS declarations go here */
+.login-text-and-button, .login-buttons-with-only-one-button, .login-buttons-dropdown-align- {
+  width: 100%;
+}
+
+.login-display-name {
+  font-weight: bold;
+}
+
+#login-buttons-logout {
+  float: right;
+}

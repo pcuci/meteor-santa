@@ -1,5 +1,6 @@
 <head>
   <title>Meteor Santa</title>
+  <link rel="icon" sizes="16x16 32x32" href="/favicon.ico?v=2">
 </head>
 <body>
   <div class="container">
@@ -17,9 +18,14 @@
         <ol>
           <li>Log in with any username</li>
           <li>Ensure at least 4 users are logged in from other browsers (incognito)</li>
-          <li>Pair up with your love interest</li>
+          <li>Declare your love interest, don't be their santa</li>
           <li>Match santas</li>
         </ol>
+        <footer>
+          <p>
+            <a href="https://github.com/pcuci/meteor-santa"> Fork pcuci/meteor-santa on GitHub</a>
+          </p>
+        </footer>
       </div>
     </div>
   </div>
@@ -31,7 +37,12 @@
   {{else}}
     <p>You are not a secret santa</p>
   {{/if}}
-  <button type="submit" class="btn btn-primary {{#if isMatchReady}} {{else}} disabled {{/if}}">Match Santas</button>
+
+  {{#if isMatchReady}}
+    <button type="submit" class="btn btn-primary">Match Santas</button>
+  {{else}}
+    <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Lover declarations must match, reciprocally">Match Santas</button>
+  {{/if}}
   <button type="reset" class="btn btn-warning">Clear Matches</button>
 </template>
 
