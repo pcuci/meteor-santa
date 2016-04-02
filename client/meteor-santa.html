@@ -5,13 +5,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 well">
+      {{> Login}}
       {{#if currentUser}}
         {{> Matching}}
-      {{/if}}
-
-      {{> Login}}
-
-      {{#if currentUser}}
         {{> Profile}}
       {{/if}}
 

@@ -38,7 +38,100 @@ function isSymetric(matrix) {
   return true;
 }
 
-function randomSortGiftees(players) {
+function fillSums(matrix) {
+  for (var row = 0; row < matrix.length; row++) {
+    var sum = 0;
+    for (var col = 0; col < matrix[0].length; col++) {
+      sum += matrix[row][col].weight;
+    }
+    for (var col = 0; col < matrix[0].length; col++) {
+      matrix[row][col].sum = sum;
+    }
+  }
+  if (matrix[0][0].sum > 2) {
+    throw new Meteor.Error(400, "This version of Secret Santa supports only pair-wise restrictions: " + matrix[0][0].x + " has more than one lovers.");
+  }
+}
+
+function sortMatrixRowsByOutdegree(matrix) {
+  fillSums(matrix);
+  return _.sortBy(matrix, function(row) {
+    return -row[0].sum;
+  });
+}
+
+function longestPathLength(matrix) {
+  var longestPath = 0;
+  for (var row = 0; row < matrix.length; row++) {
+    for (var col = 0; col < matrix[0].length; col++) {
+      if (matrix[row][col].weight == 2) {
+        longestPath++;
+      }
+    }
+  }
+  return longestPath;
+}
+
+function solve(matrix, lastTry) {
+  var m = JSON.parse(JSON.stringify(matrix));
+
+  // Assume the topologically ordered matrix is solvable
+  for (var row = 0; row < m.length; row++) {
+    for (var col = 0; col < m[0].length; col++) {
+      // Find first connection option
+      if (m[row][col].weight == 0 && !m[row][col].used) {
+        m[row][col].weight = 2;
+        // Mark entire column used
+        for (var innerRow = row; innerRow < m.length; innerRow++) {
+          m[innerRow][col].used = true;
+        }
+        break;
+      }
+    }
+  }
+
+  var longestPath = longestPathLength(m);
+  if (!lastTry && longestPath < m.length) {
+    // Reorder the last 2 nodes to continue the cycle
+    console.log("longest path:", longestPath);
+    var lastRow = matrix.pop();
+    var secondLastRow = matrix.pop();
+    matrix.push(lastRow);
+    matrix.push(secondLastRow);
+    // Retry only once, one flip of the last two rows
+    return solve(matrix, true);
+  } else {
+    console.log("longest path (else):", longestPath);
+    return m;
+  }
+}
+
+function printSolution(matrix) {
+  for (var row = 0; row < matrix.length; row++) {
+    for (var col = 0; col < matrix[0].length; col++) {
+      if (matrix[row][col].weight == 2) {
+        console.log(matrix[row][col].x, "->", matrix[row][col].y);
+      }
+    }
+  }
+}
+
+function extractMatches(matrix) {
+  var matches = [];
+  for (var row = 0; row < matrix.length; row++) {
+    for (var col = 0; col < matrix[0].length; col++) {
+      if (matrix[row][col].weight == 2) {
+        matches.push({
+          santaUsername: matrix[row][col].x,
+          gifteeUsername: matrix[row][col].y
+        });
+      }
+    }
+  }
+  return matches;
+}
+
+function findMatches(players) {
   var clonedPlayers = JSON.parse(JSON.stringify(players));
   var shuffeledGiftees = _.shuffle(clonedPlayers);
   _.each(shuffeledGiftees, function(giftee) {
@@ -47,12 +140,15 @@ function randomSortGiftees(players) {
   var matrix = printMatrix(shuffeledGiftees);
 
   console.log("Symetric?", isSymetric(matrix));
-
-  // In the worst case scenario we have 2 couples at the tail of both lists
-  if (players.length < 4) {
-    throw new Meteor.Error(400, "Matching failed. For paired plays, we need at least 4 people playing.");
-  }
-  return shuffeledGiftees;
+  console.log(matrix);
+  matrix = sortMatrixRowsByOutdegree(matrix);
+  console.log("Sorted:");
+  console.log(matrix);
+  matrix = solve(matrix);
+  console.log("Solved:");
+  console.log(matrix);
+  printSolution(matrix);
+  return extractMatches(matrix);
 }
 
 process.env.HTTP_FORWARDED_COUNT = 1;
@@ -71,13 +167,6 @@ Meteor.publish(null, function() {
     }), UserStatus.connections.find()
   ];
 });
-
-printUsernames = function (arr) {
-  for (i = 0; i < arr.length; i++) {
-    console.log(arr[i].username, ', ');
-  }
-  console.log()
-}
 
 Meteor.methods({
   setSingle: function (single) {
@@ -98,32 +187,16 @@ Meteor.methods({
   },
   matchSantas: function () {
     var players = Meteor.users.find().fetch();
-    var giftees = randomSortGiftees(players);
-    printUsernames(players);
-    printUsernames(giftees);
-    for (i = 0; i < players.length; i++) {
-      if (players[i]._id === giftees[i]._id) {
-        // swap it with the last
-        console.log("> ERROR: self-santa!", players[i].username, i);
-        if (i < giftees.length - 1) {
-          swapArrayElements(giftees, i, giftees.length - 1);
-        } else {
-          swapArrayElements(giftees, 1, giftees.length - 1);
-        }
-      }
-    }
-
-    printUsernames(giftees);
-
-    for (i = 0; i < players.length; i++) {
-      // can't pick yourself, ensure gifteeId is not player's _id
-      giftee = giftees.shift();
-      Meteor.users.update(players[i]._id, {
+    var matches = findMatches(players);
+    console.log("matches:", matches);
+    _.each(matches, function(match) {
+      var santa = Meteor.users.findOne({username: match.santaUsername});
+      var giftee = Meteor.users.findOne({username: match.gifteeUsername});
+      Meteor.users.update(santa._id, {
         $set: {
           gifteeId: giftee._id
         }
       });
-      console.log(players[i].username, "🎅 ", (Meteor.users.findOne({_id: giftee._id})) ? Meteor.users.findOne({_id: giftee._id}).username : "");
-    }
+    });
   }
 });
