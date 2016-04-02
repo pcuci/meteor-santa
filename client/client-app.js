@@ -1,3 +1,5 @@
+import {getAdjacencyMatrix, isSymetric} from "../utils";
+
 UserConnections = new Mongo.Collection("user_status_sessions");
 relativeTime = function(timeAgo) {
   var ago, days, diff, time;
@@ -68,52 +70,15 @@ Template.Conjoint.events({
   }
 });
 
-Template.status.events = {
-  "submit form.start-monitor": function(e, tmpl) {
-    e.preventDefault();
-    return UserStatus.startMonitor({
-      threshold: tmpl.find("input[name=threshold]").valueAsNumber,
-      interval: tmpl.find("input[name=interval]").valueAsNumber,
-      idleOnBlur: tmpl.find("select[name=idleOnBlur]").value === "true"
-    });
-  },
-  "click .stop-monitor": function() {
-    return UserStatus.stopMonitor();
-  },
-  "click .resync": function() {
-    return TimeSync.resync();
-  }
-};
-
-Template.status.helpers({
-  lastActivity: function() {
-    var lastActivity;
-    lastActivity = this.lastActivity();
-    if (lastActivity != null) {
-      return relativeTime(lastActivity);
-    } else {
-      return "undefined";
-    }
-  }
-});
-
-Template.status.helpers({
-  serverTime: function() {
-    return new Date(TimeSync.serverTime()).toLocaleString();
-  },
-  serverOffset: TimeSync.serverOffset,
-  serverRTT: TimeSync.roundTripTime,
-  isIdleText: function() {
-    return this.isIdle() || "false";
-  },
-  isMonitoringText: function() {
-    return this.isMonitoring() || "false";
-  }
-});
-
 Template.Matching.helpers({
   users: function() {
     return Meteor.users.find();
+  },
+  isMatchReady: function() {
+    // Ensure everyone has declared their better halfs
+    var isMatchReady = isSymetric(getAdjacencyMatrix(Meteor.users.find().fetch()));
+    console.log("Match ready?", isMatchReady);
+    return isMatchReady;
   },
   giftee: function() {
     if (Meteor.user() && Meteor.user().gifteeId) {
@@ -129,52 +94,15 @@ Template.All.helpers({
     return Meteor.users.find();
   }
 });
-Template.serverStatus.helpers({
-  anonymous: function() {
-    return UserConnections.find({
-      userId: {
-        $exists: false
-      }
-    });
-  },
-  users: function() {
-    return Meteor.users.find();
-  },
-  userClass: function() {
-    var ref;
-    if ((ref = this.status) != null ? ref.idle : void 0) {
-      return "warning";
-    } else {
-      return "success";
-    }
-  },
-  connections: function() {
-    return UserConnections.find({
-      userId: this._id
-    });
-  }
-});
-Template.serverConnection.helpers({
-  connectionClass: function() {
-    if (this.idle) {
-      return "warning";
-    } else {
-      return "success";
-    }
-  },
-  loginTime: function() {
-    if (this.loginTime == null) {
-      return;
-    }
-    return new Date(this.loginTime).toLocaleString();
-  }
-});
 
 Template.Matching.events = {
-  "submit form": function(e, tmpl) {
+  "click button[type=submit]": function(e, tmpl) {
     e.preventDefault();
     Meteor.call("matchSantas");
-    console.log("Match Santas button pressed!");
+  },
+  "click button[type=reset]": function(e, tmpl) {
+    e.preventDefault();
+    Meteor.call("clearSantas");
   }
 };
 
@@ -191,6 +119,7 @@ Template.Login.events = {
     });
   }
 };
+
 Deps.autorun(function(c) {
   try {
     UserStatus.startMonitor({

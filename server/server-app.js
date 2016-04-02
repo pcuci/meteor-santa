@@ -1,41 +1,24 @@
+import {getAdjacencyMatrix, isSymetric} from "../utils";
+
 var swapArrayElements = function(arr, indexA, indexB) {
   var temp = arr[indexA];
   arr[indexA] = arr[indexB];
   arr[indexB] = temp;
 };
 
-function printMatrix(players) {
-  var matrix = [];
-  // Create all possible edges
+function printMatrix(matrix) {
   var colHeader = "";
-  for (var col = 0; col < players.length; col++) {
-    colHeader += players[col].username + " ";
+  for (var col = 0; col < matrix[0].length; col++) {
+    colHeader += matrix[0][col].y + " ";
   }
   console.log(colHeader);
-  for (var row = 0; row < players.length; row++) {
-    var rowData = [];
-    for (var col = 0; col < players.length; col++) {
-      var weight = 0;
-      if ((players[row].username === players[col].username) || players[row].sweetheart === players[col].username) {
-        weight = 1;
-      }
-      rowData.push({x: players[row].username, y: players[col].username, weight: weight});
-    }
-    console.log(players[row].username, "\t", _.pluck(rowData, 'weight'));
-    matrix.push(rowData);
-  }
-  return matrix;
-}
-
-function isSymetric(matrix) {
   for (var row = 0; row < matrix.length; row++) {
-    for (var col = 0; col < matrix[0].length; col++) {
-      if (matrix[row][col].weight != matrix[col][row].weight) {
-        return false;
-      }
+    var rowData = [];
+    for (var col = 0; col < matrix.length; col++) {
+      rowData.push(matrix[row][col]);
     }
+    console.log(matrix[row][0].x, "\t", _.pluck(rowData, 'weight'));
   }
-  return true;
 }
 
 function fillSums(matrix) {
@@ -137,16 +120,16 @@ function findMatches(players) {
   _.each(shuffeledGiftees, function(giftee) {
     console.log(giftee.username, "♡ ", giftee.sweetheart);
   });
-  var matrix = printMatrix(shuffeledGiftees);
+  var matrix = getAdjacencyMatrix(shuffeledGiftees);
 
   console.log("Symetric?", isSymetric(matrix));
-  console.log(matrix);
+  printMatrix(matrix);
   matrix = sortMatrixRowsByOutdegree(matrix);
   console.log("Sorted:");
-  console.log(matrix);
+  printMatrix(matrix);
   matrix = solve(matrix);
   console.log("Solved:");
-  console.log(matrix);
+  printMatrix(matrix);
   printSolution(matrix);
   return extractMatches(matrix);
 }
@@ -188,13 +171,22 @@ Meteor.methods({
   matchSantas: function () {
     var players = Meteor.users.find().fetch();
     var matches = findMatches(players);
-    console.log("matches:", matches);
     _.each(matches, function(match) {
       var santa = Meteor.users.findOne({username: match.santaUsername});
       var giftee = Meteor.users.findOne({username: match.gifteeUsername});
       Meteor.users.update(santa._id, {
         $set: {
           gifteeId: giftee._id
+        }
+      });
+    });
+  },
+  clearSantas: function () {
+    var players = Meteor.users.find().fetch();
+    _.each(players, function(player) {
+      Meteor.users.update(player._id, {
+        $set: {
+          gifteeId: undefined
         }
       });
     });
