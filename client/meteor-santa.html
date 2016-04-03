@@ -17,97 +17,17 @@
         {{> All}}
         <h3>Instructions</h3>
         <ol>
-          <li>Log in with any username</li>
+          <li>Log in with your username</li>
           <li>Ensure at least 4 users are logged in from other browsers (incognito)</li>
           <li>Indicate significant others so they don't become your santa</li>
           <li>Match santas</li>
         </ol>
         <footer>
           <p>
-            <a href="https://github.com/pcuci/meteor-santa"> Fork pcuci/meteor-santa on GitHub</a>
+            <a href="https://github.com/pcuci/meteor-santa">Fork pcuci/meteor-santa on GitHub</a>
           </p>
         </footer>
       </div>
     </div>
   </div>
 </body>
-
-<template name="Giftee">
-  {{#if giftee}}
-    <p>You are <strong>{{giftee.username}}</strong>'s santa</p>
-  {{else}}
-    <p>You are not a santa</p>
-  {{/if}}
-</template>
-
-<template name="Matching">
-  {{#if isMatchReady}}
-    <button type="submit" class="btn btn-primary">
-      {{#if matchesExist}}
-        Reshuffle Santas
-      {{else}}
-        Match Santas
-      {{/if}}
-    </button>
-  {{else}}
-    <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Love interests must match for all non-singles, reciprocally">
-      {{#if matchesExist}}
-        Reshuffle Santas
-      {{else}}
-        Match Santas
-      {{/if}}
-    </button>
-  {{/if}}
-  {{#if matchesExist}}
-    <button type="reset" class="btn btn-warning">Clear Matches</button>
-  {{/if}}
-</template>
-
-<template name="Profile">
-  <form>
-      <label class="radio-inline">
-        <input type="radio" name="single" value="true" {{single}}>
-        Single
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="single" value="false" {{conjoint}}>
-        Conjoint
-      </label>
-  </form>
-  {{#if isConjoint}}
-    {{> Conjoint}}
-  {{/if}}
-</template>
-
-<template name="Conjoint">
-  <p>Significant others</p>
-  <form class="form-inline">
-    <select id="username-select" class="form-control">
-      <option disabled="disabled" selected="selected">Pick your love</option>
-      {{#each usernames}}
-        <option value="{{this}}">{{this}}</option>
-      {{/each}}
-    </select>
-  </form>
-</template>
-
-<template name="All">
-  <h3>Attendees</h3>
-  <ul>
-    {{#each users}}
-      <li>{{username}}</li>
-    {{/each}}
-  </ul>
-</template>
-
-<template name="Login">
-  {{#if loggedIn}}
-  {{> loginButtons}}
-  {{else}}
-  <form class="form-inline">
-    {{! We use the pattern below because it matches \w in in autocomplete for user names}}
-    <input class="form-control" type="text" name="username" required pattern="^[a-zA-Z][a-zA-Z0-9_]{5,12}$" placeholder="Username..." title="6-13 numbers or characters.">
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
-  {{/if}}
-</template>

@@ -1,0 +1,15 @@
+<template name="Profile">
+  <form>
+      <label class="radio-inline">
+        <input type="radio" name="single" value="true" {{single}}>
+        Single
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="single" value="false" {{conjoint}}>
+        Conjoint
+      </label>
+  </form>
+  {{#if isConjoint}}
+    {{> Conjoint}}
+  {{/if}}
+</template>
