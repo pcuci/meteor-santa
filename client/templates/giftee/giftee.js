@@ -5,5 +5,8 @@ Template.Giftee.helpers({
     } else {
       return null;
     }
+  },
+  hasSanta: function() {
+    return Meteor.users.findOne({gifteeId: Meteor.userId()});
   }
 });

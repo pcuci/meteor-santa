@@ -1,7 +1,11 @@
 <template name="Giftee">
   {{#if giftee}}
-    <p>You are <strong>{{giftee.username}}</strong>'s santa</p>
+    <div class="alert alert-success">You are <strong>{{giftee.username}}</strong>'s santa.
+      {{#if hasSanta}}
+        <br/>You have a santa!
+      {{/if}}
+    </div>
   {{else}}
-    <p>You are not a santa</p>
+  <div class="alert alert-info">You are not yet a santa.</div>
   {{/if}}
 </template>

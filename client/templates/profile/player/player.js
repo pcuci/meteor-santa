@@ -5,7 +5,7 @@ Template.Player.helpers({
   match: function() {
     var player = Meteor.users.findOne({"username": "" + this});
     if (player) {
-      return Meteor.user().gifteeId == player._id ? "list-group-item-danger" : "";
+      return Meteor.user().gifteeId == player._id ? "list-group-item-success" : "";
     } else {
       return "";
     }

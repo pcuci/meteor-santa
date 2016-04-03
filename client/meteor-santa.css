@@ -2,6 +2,9 @@
 .login-text-and-button, .login-buttons-with-only-one-button, .login-buttons-dropdown-align- {
   width: 100%;
 }
+.login-text-and-button {
+  padding-bottom: 10px;
+}
 
 .login-display-name {
   font-weight: bold;
