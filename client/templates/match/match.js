@@ -1,6 +1,6 @@
 import {getAdjacencyMatrix, isSymetric} from "../../../utils";
 
-Template.Matching.helpers({
+Template.Match.helpers({
   users: function() {
     return Meteor.users.find();
   },
@@ -14,7 +14,7 @@ Template.Matching.helpers({
   }
 });
 
-Template.Matching.events({
+Template.Match.events({
   "click button[type=submit]": function(e, tmpl) {
     e.preventDefault();
     Meteor.call("matchSantas");

@@ -1,4 +1,10 @@
-Template.Login.events = {
+Template.Login.helpers({
+  loggedIn: function() {
+    return Meteor.userId();
+  }
+});
+
+Template.Login.events({
   "submit form": function(e, tmpl) {
     var input;
     e.preventDefault();
@@ -9,11 +15,5 @@ Template.Login.events = {
         return console.log(err);
       }
     });
-  }
-};
-
-Template.Login.helpers({
-  loggedIn: function() {
-    return Meteor.userId();
   }
 });

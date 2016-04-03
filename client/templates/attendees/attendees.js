@@ -1,4 +1,4 @@
-Template.All.helpers({
+Template.Attendees.helpers({
   users: function() {
     return Meteor.users.find();
   }

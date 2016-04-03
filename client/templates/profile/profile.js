@@ -30,4 +30,4 @@ Template.Profile.events({
     Meteor.call("setSingle", (single == "true"));
     Meteor.call("setSweetheart", undefined);
   }
-})
+});
