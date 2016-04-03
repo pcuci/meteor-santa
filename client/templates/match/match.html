@@ -1,22 +1,24 @@
 <template name="Match">
-  {{#if isMatchReady}}
-    <button type="submit" class="btn btn-primary">
-      {{#if matchesExist}}
-        Reshuffle Santas
-      {{else}}
-        Match Santas
-      {{/if}}
-    </button>
-  {{else}}
-    <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Love interests must match for all non-singles, reciprocally">
-      {{#if matchesExist}}
-        Reshuffle Santas
-      {{else}}
-        Match Santas
-      {{/if}}
-    </button>
-  {{/if}}
-  {{#if matchesExist}}
-    <button type="reset" class="btn btn-warning">Clear Matches</button>
-  {{/if}}
+  <div class="input-group">
+    {{#if isMatchReady}}
+      <button type="submit" class="btn btn-primary">
+        {{#if matchesExist}}
+          Reshuffle Santas
+        {{else}}
+          Match Santas
+        {{/if}}
+      </button>
+    {{else}}
+      <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Love interests must match for all non-singles, reciprocally">
+        {{#if matchesExist}}
+          Reshuffle Santas
+        {{else}}
+          Match Santas
+        {{/if}}
+      </button>
+    {{/if}}
+    {{#if matchesExist}}
+      <button type="reset" class="btn btn-warning">Clear Matches</button>
+    {{/if}}
+  </div>
 </template>
