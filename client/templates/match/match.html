@@ -1,21 +1,25 @@
 <template name="Match">
-  <div class="input-group">
-    {{#if isMatchReady}}
-      <button type="submit" class="btn btn-primary">
-        {{#if matchesExist}}
+  <div class="btn-group">
+    {{#if matchable}}
+      {{#if matchesExist}}
+        <button type="submit" class="btn btn-danger">
           Reshuffle Santas
-        {{else}}
+        </button>
+      {{else}}
+        <button type="submit" class="btn btn-primary">
           Match Santas
-        {{/if}}
-      </button>
+        </button>
+      {{/if}}
     {{else}}
-      <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match, reciprocally">
-        {{#if matchesExist}}
+      {{#if matchesExist}}
+        <button class="btn btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
           Reshuffle Santas
-        {{else}}
+        </button>
+      {{else}}
+        <button class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
           Match Santas
-        {{/if}}
-      </button>
+        </button>
+      {{/if}}
     {{/if}}
     {{#if matchesExist}}
       <button type="reset" class="btn btn-warning">Clear Matches</button>

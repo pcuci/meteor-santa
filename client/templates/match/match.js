@@ -7,7 +7,7 @@ Template.Match.helpers({
   matchesExist: function() {
     return Meteor.users.findOne({gifteeId: {$exists: true}});
   },
-  isMatchReady: function() {
+  matchable: function() {
     // Ensure everyone has declared their better halfs
     var isMatchReady = isSymetric(getAdjacencyMatrix(Meteor.users.find().fetch()));
     return isMatchReady;
@@ -15,12 +15,12 @@ Template.Match.helpers({
 });
 
 Template.Match.events({
-  "click button[type=submit]": function(e, tmpl) {
-    e.preventDefault();
+  "click button[type=submit]": function(event, template) {
+    event.preventDefault();
     Meteor.call("matchSantas");
   },
-  "click button[type=reset]": function(e, tmpl) {
-    e.preventDefault();
+  "click button[type=reset]": function(event, template) {
+    event.preventDefault();
     Meteor.call("clearSantas");
   }
 });

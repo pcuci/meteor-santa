@@ -5,10 +5,10 @@ Template.Login.helpers({
 });
 
 Template.Login.events({
-  "submit form": function(e, tmpl) {
+  "submit form": function(event, template) {
     var input;
-    e.preventDefault();
-    input = tmpl.find("input[name=username]");
+    event.preventDefault();
+    input = template.find("input[name=username]");
     input.blur();
     return Meteor.insecureUserLogin(input.value, function(err, res) {
       if (err) {
