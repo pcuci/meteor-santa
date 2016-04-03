@@ -9,8 +9,9 @@
         <h1>Secret Santa</h1>
         {{> Login}}
         {{#if currentUser}}
-          {{> Matching}}
+          {{> Giftee}}
           {{> Profile}}
+          {{> Matching}}
         {{/if}}
 
         {{> All}}
@@ -18,7 +19,7 @@
         <ol>
           <li>Log in with any username</li>
           <li>Ensure at least 4 users are logged in from other browsers (incognito)</li>
-          <li>Declare your love interest, don't be their santa</li>
+          <li>Indicate significant others so they don't become your santa</li>
           <li>Match santas</li>
         </ol>
         <footer>
@@ -31,17 +32,19 @@
   </div>
 </body>
 
-<template name="Matching">
+<template name="Giftee">
   {{#if giftee}}
-    <p>You are <strong>{{giftee.username}}</strong>'s secret santa</p>
+    <p>You are <strong>{{giftee.username}}</strong>'s santa</p>
   {{else}}
-    <p>You are not a secret santa</p>
+    <p>You are not a santa</p>
   {{/if}}
+</template>
 
+<template name="Matching">
   {{#if isMatchReady}}
     <button type="submit" class="btn btn-primary">
       {{#if matchesExist}}
-        Rematch Santas
+        Reshuffle Santas
       {{else}}
         Match Santas
       {{/if}}
@@ -49,7 +52,7 @@
   {{else}}
     <button type="submit" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Love interests must match for all non-singles, reciprocally">
       {{#if matchesExist}}
-        Rematch Santas
+        Reshuffle Santas
       {{else}}
         Match Santas
       {{/if}}
@@ -61,7 +64,6 @@
 </template>
 
 <template name="Profile">
-  <h3>How single?</h3>
   <form>
       <label class="radio-inline">
         <input type="radio" name="single" value="true" {{single}}>
@@ -78,7 +80,7 @@
 </template>
 
 <template name="Conjoint">
-  <p>Who's your sweetheart?</p>
+  <p>Significant others</p>
   <form class="form-inline">
     <select id="username-select" class="form-control">
       <option disabled="disabled" selected="selected">Pick your love</option>
@@ -90,7 +92,7 @@
 </template>
 
 <template name="All">
-  <h3>Players</h3>
+  <h3>Attendees</h3>
   <ul>
     {{#each users}}
       <li>{{username}}</li>

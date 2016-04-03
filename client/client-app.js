@@ -82,7 +82,10 @@ Template.Matching.helpers({
     var isMatchReady = isSymetric(getAdjacencyMatrix(Meteor.users.find().fetch()));
     console.log("Match ready?", isMatchReady);
     return isMatchReady;
-  },
+  }
+});
+
+Template.Giftee.helpers({
   giftee: function() {
     if (Meteor.user() && Meteor.user().gifteeId) {
       return Meteor.users.findOne({_id: Meteor.user().gifteeId});
