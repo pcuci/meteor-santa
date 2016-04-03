@@ -135,9 +135,7 @@ function findMatches(players) {
 process.env.HTTP_FORWARDED_COUNT = 1;
 Meteor.publish(null, function() {
   return [
-    Meteor.users.find({
-      "status.online": true
-    }, {
+    Meteor.users.find({}, {
       fields: {
         status: 1,
         gifteeId: 1,
