@@ -1,11 +1,11 @@
 <template name="Profile">
   <p>Significant other?</p>
-  <form>
-    <select id="username-select" class="form-control">
-      <option selected="selected" value="">None - I'm single</option>
-      {{#each usernames}}
-        <option value="{{this}}">{{this}}</option>
-      {{/each}}
-    </select>
-  </form>
+  <div class="list-group">
+    <a href="#" value="" class="list-group-item {{active}}">
+      None - I'm single
+    </a>
+    {{#each usernames}}
+      {{> Player}}
+    {{/each}}
+  </div>
 </template>
