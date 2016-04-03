@@ -9,5 +9,17 @@ Template.Player.helpers({
     } else {
       return "";
     }
+  },
+  inLinks: function() {
+    var inLinksUsers = Meteor.users.find({"sweetheart": "" + this}).fetch();
+    inLinksUsernames = _.pluck(inLinksUsers, 'username');
+    if (inLinksUsernames.length > 0) {
+      return inLinksUsernames.join(' ');
+    } else {
+      return false;
+    }
+  },
+  isCurrentPlayer: function() {
+    return Meteor.user().username == "" + this;
   }
 });

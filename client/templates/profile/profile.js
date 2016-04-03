@@ -12,7 +12,7 @@ Template.Profile.helpers({
     return Meteor.user().sweetheart ? "" : "active";
   },
   usernames: function() {
-    var users = Meteor.users.find({_id: {$ne: Meteor.userId()}}).fetch();
+    var users = Meteor.users.find({}, {sort: { username: 1 }}).fetch();
     var usernames = _.pluck(users, 'username');
     return usernames
   }

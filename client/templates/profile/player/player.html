@@ -1,6 +1,17 @@
 <template name="Player">
-  <a id="{{this}}" href="#" class="list-group-item {{match}} {{active}}">
-    {{this}}
-    <span class="badge">{{state}}</span>
-  </a>
+  {{#if isCurrentPlayer}}
+    <a id="{{this}}" href="#" class="list-group-item {{match}} {{active}} disabled" data-toggle="tooltip" data-placement="top" title="Can't select yourself">
+      {{this}} (you)
+      {{#if inLinks}}
+        <span class="badge">{{inLinks}}</span>
+      {{/if}}
+    </a>
+  {{else}}
+    <a id="{{this}}" href="#" class="list-group-item {{match}} {{active}}">
+      {{this}}
+      {{#if inLinks}}
+        <span class="badge">{{inLinks}}</span>
+      {{/if}}
+    </a>
+  {{/if}}
 </template>
