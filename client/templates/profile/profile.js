@@ -2,18 +2,16 @@ Template.Profile.events({
   "click a": function (event, template) {
     event.preventDefault();
     var username = template.find(event.currentTarget).id;
-    console.log("username: " + username);
-    Meteor.call("setSweetheart", username);
+    var significant = Meteor.users.findOne({username: username});
+    Meteor.call("setSignificant", significant);
   }
 });
 
 Template.Profile.helpers({
   active: function() {
-    return Meteor.user().sweetheart ? "" : "active";
+    return Meteor.user().significantId ? "" : "active";
   },
-  usernames: function() {
-    var users = Meteor.users.find({}, {sort: { username: 1 }}).fetch();
-    var usernames = _.pluck(users, 'username');
-    return usernames
+  players: function() {
+    return Meteor.users.find({}, {sort: { username: 1 }}).fetch();
   }
 });

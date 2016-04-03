@@ -10,7 +10,9 @@ export function getAdjacencyMatrix(players) {
     var rowData = [];
     for (var col = 0; col < players.length; col++) {
       var weight = 0;
-      if ((players[row].username === players[col].username) || players[row].sweetheart === players[col].username) {
+      var significant = _.findWhere(players, {_id: players[row].significantId});
+      var significantUsername = significant ? significant.username : undefined;
+      if ((players[row].username === players[col].username) || significantUsername === players[col].username) {
         weight = 1;
       }
       rowData.push({x: players[row].username, y: players[col].username, weight: weight});

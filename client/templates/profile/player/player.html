@@ -1,14 +1,14 @@
 <template name="Player">
   {{#if isCurrentPlayer}}
-    <a id="{{this}}" href="#" class="list-group-item {{match}} {{active}} disabled" data-toggle="tooltip" data-placement="top" title="Can't select yourself">
-      {{this}} (you)
+    <a id="{{username}}" href="#" class="list-group-item {{match}} {{active}} disabled" data-toggle="tooltip" data-placement="top" title="Can't select yourself">
+      {{username}} (you)
       {{#if inLinks}}
         <span class="badge">{{inLinks}}</span>
       {{/if}}
     </a>
   {{else}}
-    <a id="{{this}}" href="#" class="list-group-item {{match}} {{active}}">
-      {{this}}
+    <a id="{{username}}" href="#" class="list-group-item {{match}} {{active}}">
+      {{username}}
       {{#if inLinks}}
         <span class="badge">{{inLinks}}</span>
       {{/if}}

@@ -1,9 +1,9 @@
 Template.Player.helpers({
   active: function() {
-    return Meteor.user().sweetheart == this ? "active" : "";
+    return Meteor.user().significantId == this._id ? "active" : "";
   },
   match: function() {
-    var player = Meteor.users.findOne({"username": "" + this});
+    var player = Meteor.users.findOne({_id: "" + this._id});
     if (player) {
       return Meteor.user().gifteeId == player._id ? "list-group-item-success" : "";
     } else {
@@ -11,7 +11,7 @@ Template.Player.helpers({
     }
   },
   inLinks: function() {
-    var inLinksUsers = Meteor.users.find({"sweetheart": "" + this}).fetch();
+    var inLinksUsers = Meteor.users.find({"significantId": "" + this._id}).fetch();
     inLinksUsernames = _.pluck(inLinksUsers, 'username');
     if (inLinksUsernames.length > 0) {
       return inLinksUsernames.join(' ');
@@ -20,6 +20,6 @@ Template.Player.helpers({
     }
   },
   isCurrentPlayer: function() {
-    return Meteor.user().username == "" + this;
+    return Meteor.userId() == "" + this._id;
   }
 });

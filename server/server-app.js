@@ -117,9 +117,7 @@ function extractMatches(matrix) {
 function findMatches(players) {
   var clonedPlayers = JSON.parse(JSON.stringify(players));
   var shuffeledGiftees = _.shuffle(clonedPlayers);
-  _.each(shuffeledGiftees, function(giftee) {
-    console.log(giftee.username, "♡ ", giftee.sweetheart);
-  });
+  console.log(clonedPlayers);
   var matrix = getAdjacencyMatrix(shuffeledGiftees);
 
   console.log("Symetric?", isSymetric(matrix));
@@ -144,8 +142,7 @@ Meteor.publish(null, function() {
         status: 1,
         gifteeId: 1,
         username: 1,
-        sweetheart: 1,
-        single: 1
+        significantId: 1
       }
     }), UserStatus.connections.find()
   ];
@@ -155,21 +152,22 @@ Meteor.methods({
   deleteAccount: function () {
     Meteor.users.remove(this.userId);
   },
-  setSingle: function (single) {
-    Meteor.users.update(this.userId, {
-      $set: {
-        single: single
-      }
-    });
-  },
-  setSweetheart: function (username) {
-    if (Meteor.user() && (Meteor.user().username == username))
-      throw new Meteor.Error(400, "You can't be your own santa!");
-    Meteor.users.update(this.userId, {
-      $set: {
-        sweetheart: username
-      }
-    });
+  setSignificant: function (significant) {
+    if (significant) {
+      if (Meteor.user() && (Meteor.user().username == significant.username))
+        throw new Meteor.Error(400, "You can't be your own significant other!");
+      Meteor.users.update(this.userId, {
+        $set: {
+          significantId: significant._id
+        }
+      });
+    } else {
+      Meteor.users.update(this.userId, {
+        $unset: {
+          significantId: ""
+        }
+      });
+    }
   },
   matchSantas: function () {
     var players = Meteor.users.find().fetch();
