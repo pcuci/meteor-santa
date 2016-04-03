@@ -152,6 +152,9 @@ Meteor.publish(null, function() {
 });
 
 Meteor.methods({
+  deleteAccount: function () {
+    Meteor.users.remove(this.userId);
+  },
   setSingle: function (single) {
     Meteor.users.update(this.userId, {
       $set: {

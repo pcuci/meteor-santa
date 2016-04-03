@@ -8,11 +8,19 @@
       <div class="col-md-offset-4 col-md-4">
         <h1>Secret Santa</h1>
         {{> Login}}
-        {{#if currentUser}}
+      </div>
+    </div>
+    {{#if currentUser}}
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
           {{> Giftee}}
           {{> Profile}}
           {{> Match}}
-        {{/if}}
+        </div>
+      </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-md-offset-4 col-md-4">
         <h3>Instructions</h3>
         <ol>
           <li>Log in with your username (first use creates new account)</li>
@@ -20,12 +28,21 @@
           <li>Indicate significant others so they don't become your santa</li>
           <li>Match santas</li>
         </ol>
-        <footer>
-          <p>
-            <a href="https://github.com/pcuci/meteor-santa">Fork pcuci/meteor-santa on GitHub</a>
-          </p>
-        </footer>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-offset-4 col-md-4">
+        {{#if currentUser}}
+          {{> Delete}}
+        {{/if}}
+      </div>
+    </div>
+    <footer>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <a href="https://github.com/pcuci/meteor-santa">Fork pcuci/meteor-santa on GitHub</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
