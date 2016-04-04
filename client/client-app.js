@@ -11,9 +11,3 @@ Deps.autorun(function(c) {
     return c.stop();
   } catch (_error) {}
 });
-
-Deps.autorun(function(c) {
-  if (remainingCount()) {
-    Meteor.call("resetRelationships");
-  }
-});

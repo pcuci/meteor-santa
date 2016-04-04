@@ -189,16 +189,5 @@ Meteor.methods({
         }
       });
     });
-  },
-  resetRelationships: function() {
-    var players = Meteor.users.find().fetch();
-    _.each(players, function(player) {
-      Meteor.users.update(player._id, {
-        $unset: {
-          gifteeId: "",
-          significantId: ""
-        }
-      });
-    });
   }
 });
