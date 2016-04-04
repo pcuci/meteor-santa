@@ -1,3 +1,5 @@
+import {remainingCount} from "../../requirements/requirements.js";
+
 Template.Player.helpers({
   active: function() {
     return Meteor.user().significantId == this._id ? "active" : "";
@@ -21,5 +23,6 @@ Template.Player.helpers({
   },
   isCurrentPlayer: function() {
     return Meteor.userId() == "" + this._id;
-  }
+  },
+  remainingCount: remainingCount
 });

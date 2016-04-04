@@ -1,3 +1,5 @@
+import {remainingCount} from "./templates/requirements/requirements.js";
+
 UserConnections = new Mongo.Collection("user_status_sessions");
 
 Deps.autorun(function(c) {
@@ -8,4 +10,10 @@ Deps.autorun(function(c) {
     });
     return c.stop();
   } catch (_error) {}
+});
+
+Deps.autorun(function(c) {
+  if (remainingCount()) {
+    Meteor.call("resetRelationships");
+  }
 });

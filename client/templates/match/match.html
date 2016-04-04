@@ -1,28 +1,31 @@
 <template name="Match">
   <div class="btn-group">
-    {{#if matchable}}
-      {{#if matchesExist}}
-        <button type="submit" class="btn btn-danger">
-          Reshuffle Santas
-        </button>
-      {{else}}
-        <button type="submit" class="btn btn-primary">
-          Match Santas
-        </button>
-      {{/if}}
+    {{#if remainingCount}}
     {{else}}
-      {{#if matchesExist}}
-        <button class="btn btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
-          Reshuffle Santas
-        </button>
+      {{#if matchable}}
+        {{#if existingMatches}}
+          <button type="submit" class="btn btn-danger">
+            Reshuffle Santas
+          </button>
+        {{else}}
+          <button type="submit" class="btn btn-primary">
+            Match Santas
+          </button>
+        {{/if}}
       {{else}}
-        <button class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
-          Match Santas
-        </button>
+        {{#if existingMatches}}
+          <button class="btn btn-danger disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
+            Reshuffle Santas
+          </button>
+        {{else}}
+          <button class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Significant others must match reciprocally">
+            Match Santas
+          </button>
+        {{/if}}
       {{/if}}
-    {{/if}}
-    {{#if matchesExist}}
-      <button type="reset" class="btn btn-warning">Clear Matches</button>
+      {{#if existingMatches}}
+        <button type="reset" class="btn btn-warning">Clear Matches</button>
+      {{/if}}
     {{/if}}
   </div>
 </template>
